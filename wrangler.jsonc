@@ -5,7 +5,10 @@
     "command": "node build.mjs"
   },
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
   },
-  "workers_dev": true
+  "workers_dev": true,
+  "main": "worker.js"
 }

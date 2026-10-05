@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aiditi.art/sitemap.xml

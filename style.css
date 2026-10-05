@@ -34,3 +34,12 @@ button:focus-visible,a:focus-visible{outline:1px solid currentColor;outline-offs
 .labirinto-logo .original-logo{filter:none;mask-image:url('aiditi-logo-white-2024-2-spaced.gif');mask-mode:luminance;mask-size:contain;mask-repeat:no-repeat;mask-position:center}
 .brand .logo-light{mix-blend-mode:screen}.brand .logo-dark{mix-blend-mode:multiply}
 .brand img{mask-image:url('aiditi-logo-white-2024-2-spaced.gif');mask-mode:luminance;mask-size:contain;mask-repeat:no-repeat;mask-position:center;mix-blend-mode:normal!important}
+/* Quiet movement and launch controls. */
+.labirinto #enter{color:#f7f8ef;transition:background .3s,border-color .3s,transform .3s,box-shadow .3s}
+.labirinto #enter:hover,.labirinto #enter:focus-visible{color:#fff;background:#ffffff16;transform:translateY(-2px);box-shadow:0 6px 22px #0003}
+.labirinto #enter .icon{transition:transform .3s}.labirinto #enter:hover .icon{transform:translate(2px,-2px)}
+.statement{background:#181818;color:#f4f3ef;border:0}.statement i{color:#fff}.statement:before{opacity:.12}
+main>.view-motion>*{transition:opacity .65s ease,translate .75s cubic-bezier(.2,.65,.2,1);opacity:.35;translate:0 18px}
+main>.view-motion.in-view>*{opacity:1;translate:0 0}
+.share-site{border:0;background:none;color:inherit;padding:10px 0;font-size:11px;display:inline-flex;align-items:center;gap:8px}.share-site:hover{text-decoration:underline;text-underline-offset:5px}#share-status{font-size:11px}#share-link-dialog{max-width:420px;padding:30px}#share-link-dialog input{display:block;width:100%;margin-top:12px;padding:12px;border:1px solid #222;background:white}body>header.scrolled nav>a:hover{color:#222}
+@media(prefers-reduced-motion:reduce){main>.view-motion>*{opacity:1!important;translate:none!important;transition:none!important}.labirinto #enter:hover,.labirinto #enter:hover .icon{transform:none}}
