@@ -43,3 +43,11 @@ main>.view-motion>*{transition:opacity .65s ease,translate .75s cubic-bezier(.2,
 main>.view-motion.in-view>*{opacity:1;translate:0 0}
 .share-site{border:0;background:none;color:inherit;padding:10px 0;font-size:11px;display:inline-flex;align-items:center;gap:8px}.share-site:hover{text-decoration:underline;text-underline-offset:5px}#share-status{font-size:11px}#share-link-dialog{max-width:420px;padding:30px}#share-link-dialog input{display:block;width:100%;margin-top:12px;padding:12px;border:1px solid #222;background:white}body>header.scrolled nav>a:hover{color:#222}
 @media(prefers-reduced-motion:reduce){main>.view-motion>*{opacity:1!important;translate:none!important;transition:none!important}.labirinto #enter:hover,.labirinto #enter:hover .icon{transform:none}}
+/* More air around the content hero's artwork, independently of the intro mark. */
+.motion-hero h1{font-size:clamp(58px,9.4vw,146px)}
+.motion-hero .hero-collage{grid-template-columns:18% 52% 26%;column-gap:2%;margin-top:34px}
+.motion-hero .hero-digital{margin-left:0;margin-top:85px}
+@media(max-width:800px){.motion-hero h1{font-size:12vw}.motion-hero .hero-collage{grid-template-columns:6% 64% 26%;margin-top:32px}.motion-hero .hero-art{grid-column:2}.motion-hero .hero-digital{margin-left:0;margin-top:80px}}
+@media(max-width:500px){.motion-hero h1{font-size:12.8vw}.motion-hero .hero-collage{grid-template-columns:68% 28%;column-gap:4%;align-items:start;margin-top:30px}.motion-hero .hero-art{grid-column:1}.motion-hero .hero-art img{height:175px}.motion-hero .hero-digital{grid-column:2;width:100%;margin-left:0;margin-top:60px}.motion-hero .hero-digital img{height:125px}.motion-hero .hero-digital span{position:static;display:block;font-size:7px;padding:7px;background:#181818}.motion-hero .hero-bottom{margin-top:28px}}
+.motion-hero .hero-digital img{height:auto;aspect-ratio:16/9;object-fit:contain}
+@media(max-width:500px){.motion-hero .hero-collage{grid-template-columns:1fr;gap:22px}.motion-hero .hero-art{grid-column:1;width:90%}.motion-hero .hero-digital{grid-column:1;justify-self:end;width:65%;margin-top:0}.motion-hero .hero-art img{height:auto;aspect-ratio:1920/1277;object-fit:contain}.motion-hero .hero-digital span{position:static;display:block}}
