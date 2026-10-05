@@ -2,11 +2,12 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const entrance = document.querySelector('#entrance');
   const hero = document.querySelector('.hero');
-  const site = [...document.querySelectorAll('body > header, body > main, body > footer')];
+  const site = [...document.querySelectorAll('body > header, body > main, body > footer, body > .skip')];
+  const labirinto = entrance.classList.contains('labirinto');
+  let nodes = window.createNodeMarks(hero);
+  document.addEventListener('languagechange', () => { nodes.stop(); nodes = window.createNodeMarks(hero); });
   let exitTimer, focusTimer, entranceField;
-  let entered = false;
-  try { entered = sessionStorage.getItem('aiditi-entered') === '1'; } catch {}
-  document.querySelector('#replay').hidden = reduced.matches;
+
   function lightField(canvas, container, dark) {
     const context = canvas.getContext('2d');
     if (!context) return { stop() {} };
@@ -96,35 +97,34 @@
       entrance.style.setProperty('--exit-x', `${event.clientX / innerWidth * 100}%`);
       entrance.style.setProperty('--exit-y', `${event.clientY / innerHeight * 100}%`);
     }
-    site.forEach(element => element.inert = false);
     document.body.classList.remove('intro-running');
     document.body.classList.add('arriving');
     entrance.classList.add('leaving');
-    try { sessionStorage.setItem('aiditi-entered', '1'); } catch {}
     const userEntered = event?.type === 'click';
     setTimeout(() => {
       entrance.hidden = true; entranceField?.stop();
+      site.forEach(element => element.inert = false);
       if (userEntered || entrance.contains(document.activeElement)) document.querySelector('.brand').focus({ preventScroll: true });
     }, reduced.matches ? 0 : 1150);
     setTimeout(() => document.body.classList.remove('arriving'), 1900);
   }
   function startEntrance() {
-    if (reduced.matches) { entrance.hidden = true; return; }
+    clearTimeout(exitTimer); clearTimeout(focusTimer);
     window.scrollTo({ top: 0, behavior: 'instant' });
     entrance.hidden = false; entrance.classList.remove('leaving');
     entrance.style.removeProperty('--exit-x'); entrance.style.removeProperty('--exit-y');
     document.body.classList.remove('arriving'); document.body.classList.add('intro-running');
     site.forEach(element => element.inert = true);
-    entranceField?.stop(); entranceField = lightField(document.querySelector('#entrance-field'), entrance, true);
+    entranceField?.stop(); entranceField = labirinto ? window.createLabirintoField(document.querySelector('#entrance-field'), entrance) : reduced.matches ? null : lightField(document.querySelector('#entrance-field'), entrance, true);
     focusTimer = setTimeout(() => document.querySelector('#enter').focus({ preventScroll: true }), 100);
-    exitTimer = setTimeout(finishEntrance, 8200);
+
   }
   document.querySelector('#enter').addEventListener('click', finishEntrance);
-  document.querySelector('#skip-intro').addEventListener('click', finishEntrance);
+
   document.querySelector('#replay').addEventListener('click', startEntrance);
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && !entrance.hidden) finishEntrance(event); });
+  document.querySelectorAll('.brand').forEach(brand => brand.addEventListener('click', event => { event.preventDefault(); if (!entrance.hidden && entrance.classList.contains('leaving')) return; startEntrance(); }));
   reduced.addEventListener('change', () => {
-    if (reduced.matches) { clearTimeout(exitTimer); entranceField?.stop(); heroField?.stop(); entrance.hidden = true; site.forEach(element => element.inert = false); document.body.classList.remove('intro-running','arriving'); }
+    if (reduced.matches) { if (!labirinto) entranceField?.stop(); heroField?.stop(); document.body.classList.remove('arriving'); }
   });
-  if (!location.hash && !entered) startEntrance(); else entrance.hidden = true;
+  startEntrance();
 })();
