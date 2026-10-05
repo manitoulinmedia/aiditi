@@ -111,6 +111,7 @@
   function startEntrance() {
     clearTimeout(exitTimer); clearTimeout(focusTimer);
     window.scrollTo({ top: 0, behavior: 'instant' });
+    window.AiDiTiMenu?.close();
     entrance.hidden = false; entrance.classList.remove('leaving');
     entrance.style.removeProperty('--exit-x'); entrance.style.removeProperty('--exit-y');
     document.body.classList.remove('arriving'); document.body.classList.add('intro-running');

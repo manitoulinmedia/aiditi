@@ -3,12 +3,26 @@ window.createLabirintoField = (() => {
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   function background(container) {
     if(player || !window.Vimeo)return;
-    player=new Vimeo.Player('labirinto-player',{id:75150022,background:true,autoplay:true,muted:true,loop:true,autopause:false,dnt:true,controls:false});
-    player.on('playing',()=>{ready=true;container.dataset.videoState='playing';container.classList.add('film-ready');if(paused||container.hidden||document.hidden)player.pause().catch(()=>{});});
-    player.on('pause',()=>container.dataset.videoState='paused');
-    player.on('timeupdate',e=>container.dataset.videoTime=e.seconds.toFixed(2));
-    player.on('error',()=>{container.dataset.videoState='unavailable';container.classList.remove('film-ready');});
-    player.ready().then(()=>player.setCurrentTime(22)).then(()=>{if(paused||container.hidden||document.hidden)return player.pause();return player.play();}).catch(()=>{container.dataset.videoState='poster';});
+    const films=[{id:75150022,start:22,length:32,title:'CONCERTO PER LABIRINTO',slot:'labirinto-player'}, {id:70500403,start:1,length:40,title:'REALITY — REM RIOT PRODUCTION',slot:'reality-player'}];
+    let current=0,switching=false,enabled=true;
+    const players=films.map(f=>new Vimeo.Player(f.slot,{id:f.id,background:true,autoplay:false,muted:true,loop:true,autopause:false,dnt:true,controls:false}));
+    const setCredit=i=>{const f=films[i];container.querySelector('.film-credit>span').textContent=f.title;container.querySelector('.film-credit a').href='https://vimeo.com/'+f.id;container.dataset.activeFilm=String(f.id);};
+    async function transition(){
+      if(switching||!enabled||paused||container.hidden||document.hidden)return;
+      switching=true;const next=1-current,old=current;
+      try{await players[next].setCurrentTime(films[next].start);await players[next].play();if(!enabled||paused||container.hidden){await players[next].pause();switching=false;return;}
+        container.classList.toggle('reality-active',next===1);setCredit(next);current=next;
+        setTimeout(()=>{players[old].pause().catch(()=>{});switching=false;},2600);
+      }catch(error){container.dataset.transitionError=String(error?.message||error);switching=false;}
+    }
+    players.forEach((v,i)=>{
+      v.on('playing',()=>{ready=true;container.dataset.videoState='playing';container.classList.add('film-ready');if(paused||!enabled||container.hidden||document.hidden||(i!==current&&!switching))v.pause().catch(()=>{});});
+      v.on('timeupdate',e=>{if(i!==current)return;container.dataset.videoTime=e.seconds.toFixed(2);if(e.seconds>=films[i].start+films[i].length)transition();});
+      v.on('error',()=>container.dataset.videoState='poster');
+    });
+    player={pause(){enabled=false;container.dataset.videoState='paused';return Promise.all(players.map(v=>v.pause().catch(()=>{})));},play(){enabled=true;return players[current].play();}};
+    setCredit(0);
+    Promise.all(players.map((v,i)=>v.ready().then(()=>v.setCurrentTime(films[i].start)).catch(()=>{}))).then(()=>{if(paused||container.hidden||document.hidden)return player.pause();return player.play();}).catch(()=>container.dataset.videoState='poster');
   }
   return function create(canvas,container) {
     const context=canvas.getContext('2d'),toggle=container.querySelector('#motion-toggle');
