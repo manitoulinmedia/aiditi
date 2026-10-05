@@ -70,6 +70,6 @@ button.labirinto-logo:focus-visible{outline:1px solid #fff;outline-offset:15px}
 }
 .hero.hero-scroll [data-scroll-edge]{opacity:var(--hero-opacity,1);translate:calc(var(--edge,1) * var(--hero-distance,0px)) calc(var(--hero-rise,0px));will-change:translate,opacity}
 .hero.hero-scroll [data-scroll-edge=left]{--edge:-1}.hero.hero-scroll [data-scroll-edge=right]{--edge:1}
-.hero.hero-scroll [data-scroll-edge]:focus-within{opacity:1;translate:0 0}
+.hero.hero-scroll [data-scroll-edge]:focus-visible{opacity:1;translate:0 0}
 .hero.hero-scroll.hero-away [data-scroll-edge]{pointer-events:none}
 @media(prefers-reduced-motion:reduce){.hero.hero-scroll [data-scroll-edge]{opacity:1!important;translate:none!important;will-change:auto}}
