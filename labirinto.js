@@ -3,9 +3,10 @@ window.createLabirintoField = (() => {
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   function background(container) {
     if(player || !window.Vimeo)return;
-    const films=[{id:75150022,start:22,length:32,title:'CONCERTO PER LABIRINTO',slot:'labirinto-player'}, {id:70500403,start:36,length:174,title:'REALITY — REM RIOT PRODUCTION',slot:'reality-player'}];
+    const films=[{id:75150022,start:22,length:173,title:'CONCERTO PER LABIRINTO',slot:'labirinto-player'}, {id:70500403,start:36,length:174,title:'REALITY — REM RIOT PRODUCTION',slot:'reality-player'}];
     let current=0,switching=false,enabled=true;
     const players=films.map(f=>new Vimeo.Player(f.slot,{id:f.id,background:true,autoplay:false,muted:true,loop:false,autopause:false,dnt:true,controls:false}));
+    // Concerto clean visual excerpt 00:22–03:15; clean late footage verified at 03:12 and 03:22.
     // Source review: REALITY title at 00:06; animation verified at 00:36 and 03:35, credits at 03:50.
     // Out point 03:30 leaves a safety margin for the 2.6-second crossfade.
     const setCredit=i=>{const f=films[i];container.querySelector('.film-credit>span').textContent=f.title;container.querySelector('.film-credit a').href='https://vimeo.com/'+f.id;container.dataset.activeFilm=String(f.id);};
