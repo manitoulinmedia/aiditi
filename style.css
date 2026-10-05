@@ -89,3 +89,14 @@ button.labirinto-logo{appearance:none;-webkit-appearance:none;background:transpa
 }
 .entry-opening .hero [data-scroll-edge]{opacity:0;translate:0 24px}
 @media(prefers-reduced-motion:reduce){.entry-opening .hero [data-scroll-edge]{opacity:1;translate:none}}
+/* Blend the original animated frames directly with the film backdrop. */
+button.labirinto-logo{mix-blend-mode:screen}
+.labirinto-logo>span{filter:none!important}
+.labirinto-logo .original-logo{mask:none!important;-webkit-mask:none!important}
+.labirinto-logo .still-mark{display:none}
+.motion-paused .labirinto-logo .animated-mark{display:none}
+.motion-paused .labirinto-logo .still-mark{display:block}
+footer{display:grid;grid-template-columns:auto 1fr auto;gap:22px 35px;border-top:1px solid #2222;align-items:center;padding-block:40px}
+footer>.brand{grid-column:1}footer>span{grid-column:2;font-size:10px;line-height:1.6}footer>#replay{grid-column:3}footer>.agency-credit{grid-column:2;text-align:left;padding:0}footer>.share-site{grid-column:3;grid-row:2}footer>a[data-i18n=backTop]{grid-column:1;grid-row:2;font-size:10px}footer>#share-status{grid-column:2/-1}
+@media(max-width:600px){footer{grid-template-columns:1fr auto;gap:20px;padding-block:30px}footer>span{grid-column:1/-1;grid-row:2}footer>#replay{grid-column:2;grid-row:1}footer>.agency-credit{grid-column:1;grid-row:4}footer>.share-site{grid-column:2;grid-row:3}footer>a[data-i18n=backTop]{grid-row:3}footer>#share-status{grid-row:5;grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.labirinto-logo .animated-mark{display:none}.labirinto-logo .still-mark{display:block}}
