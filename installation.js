@@ -97,16 +97,23 @@
       entrance.style.setProperty('--exit-x', `${event.clientX / innerWidth * 100}%`);
       entrance.style.setProperty('--exit-y', `${event.clientY / innerHeight * 100}%`);
     }
+    // Explicit entry always starts at the hero, even after refresh or a fragment URL.
+    const entryURL=new URL(location.href);entryURL.hash='';history.replaceState(history.state,'',entryURL);
+    window.scrollTo({top:0,left:0,behavior:'instant'});
+    document.dispatchEvent(new Event('hero-entry-reset'));
     document.body.classList.remove('intro-running');
-    document.body.classList.add('arriving');
+    document.body.classList.add('entry-opening');
     entrance.classList.add('leaving');
     const userEntered = event?.type === 'click';
     setTimeout(() => {
       entrance.hidden = true; entranceField?.stop();
+      // The overlay is now gone: reset once after layout, then leave scrolling to the visitor.
+      window.scrollTo({top:0,left:0,behavior:'instant'});document.dispatchEvent(new Event('hero-entry-reset'));
+      document.body.classList.remove('entry-opening');document.body.classList.add('arriving');
+      setTimeout(() => document.body.classList.remove('arriving'), 1900);
       site.forEach(element => element.inert = false);
       if (userEntered || entrance.contains(document.activeElement)) document.querySelector('.brand').focus({ preventScroll: true });
     }, reduced.matches ? 0 : 1150);
-    setTimeout(() => document.body.classList.remove('arriving'), 1900);
   }
   function startEntrance() {
     clearTimeout(exitTimer); clearTimeout(focusTimer);
@@ -114,7 +121,7 @@
     window.AiDiTiMenu?.close();
     entrance.hidden = false; entrance.classList.remove('leaving');
     entrance.style.removeProperty('--exit-x'); entrance.style.removeProperty('--exit-y');
-    document.body.classList.remove('arriving'); document.body.classList.add('intro-running');
+    document.body.classList.remove('arriving','entry-opening'); document.body.classList.add('intro-running');
     site.forEach(element => element.inert = true);
     entranceField?.stop(); entranceField = labirinto ? window.createLabirintoField(document.querySelector('#entrance-field'), entrance) : reduced.matches ? null : lightField(document.querySelector('#entrance-field'), entrance, true);
     focusTimer = setTimeout(() => document.querySelector('#enter').focus({ preventScroll: true }), 100);

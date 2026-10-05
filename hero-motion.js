@@ -15,5 +15,6 @@
  }
  function schedule(){if(!frame)frame=requestAnimationFrame(paint);}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
+ document.addEventListener('hero-entry-reset',paint);
  reduced.addEventListener('change',schedule);new ResizeObserver(schedule).observe(hero);paint();
 })();
