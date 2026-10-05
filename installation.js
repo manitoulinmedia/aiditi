@@ -117,7 +117,7 @@
     site.forEach(element => element.inert = true);
     entranceField?.stop(); entranceField = lightField(document.querySelector('#entrance-field'), entrance, true);
     focusTimer = setTimeout(() => document.querySelector('#enter').focus({ preventScroll: true }), 100);
-    exitTimer = setTimeout(finishEntrance, 5200);
+    exitTimer = setTimeout(finishEntrance, 8200);
   }
   document.querySelector('#enter').addEventListener('click', finishEntrance);
   document.querySelector('#skip-intro').addEventListener('click', finishEntrance);
