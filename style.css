@@ -33,3 +33,4 @@ button:focus-visible,a:focus-visible{outline:1px solid currentColor;outline-offs
 .labirinto-logo>span{filter:drop-shadow(0 5px 12px rgba(0,0,0,.6)) drop-shadow(0 14px 38px rgba(0,0,0,.53))}
 .labirinto-logo .original-logo{filter:none;mask-image:url('aiditi-logo-white-2024-2-spaced.gif');mask-mode:luminance;mask-size:contain;mask-repeat:no-repeat;mask-position:center}
 .brand .logo-light{mix-blend-mode:screen}.brand .logo-dark{mix-blend-mode:multiply}
+.brand img{mask-image:url('aiditi-logo-white-2024-2-spaced.gif');mask-mode:luminance;mask-size:contain;mask-repeat:no-repeat;mask-position:center;mix-blend-mode:normal!important}
