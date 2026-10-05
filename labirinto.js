@@ -3,14 +3,16 @@ window.createLabirintoField = (() => {
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   function background(container) {
     if(player || !window.Vimeo)return;
-    const films=[{id:75150022,start:22,length:32,title:'CONCERTO PER LABIRINTO',slot:'labirinto-player'}, {id:70500403,start:1,length:40,title:'REALITY — REM RIOT PRODUCTION',slot:'reality-player'}];
+    const films=[{id:75150022,start:22,length:32,title:'CONCERTO PER LABIRINTO',slot:'labirinto-player'}, {id:70500403,start:36,length:174,title:'REALITY — REM RIOT PRODUCTION',slot:'reality-player'}];
     let current=0,switching=false,enabled=true;
-    const players=films.map(f=>new Vimeo.Player(f.slot,{id:f.id,background:true,autoplay:false,muted:true,loop:true,autopause:false,dnt:true,controls:false}));
+    const players=films.map(f=>new Vimeo.Player(f.slot,{id:f.id,background:true,autoplay:false,muted:true,loop:false,autopause:false,dnt:true,controls:false}));
+    // Source review: REALITY title at 00:06; animation verified at 00:36 and 03:35, credits at 03:50.
+    // Out point 03:30 leaves a safety margin for the 2.6-second crossfade.
     const setCredit=i=>{const f=films[i];container.querySelector('.film-credit>span').textContent=f.title;container.querySelector('.film-credit a').href='https://vimeo.com/'+f.id;container.dataset.activeFilm=String(f.id);};
     async function transition(){
       if(switching||!enabled||paused||container.hidden||document.hidden)return;
       switching=true;const next=1-current,old=current;
-      try{await players[next].setCurrentTime(films[next].start);await players[next].play();if(!enabled||paused||container.hidden){await players[next].pause();switching=false;return;}
+      try{await players[old].pause();await players[next].setCurrentTime(films[next].start);await players[next].play();if(!enabled||paused||container.hidden){await players[next].pause();switching=false;return;}
         container.classList.toggle('reality-active',next===1);setCredit(next);current=next;
         setTimeout(()=>{players[old].pause().catch(()=>{});switching=false;},2600);
       }catch(error){container.dataset.transitionError=String(error?.message||error);switching=false;}
