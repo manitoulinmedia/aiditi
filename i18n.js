@@ -71,6 +71,9 @@
     if (!strings[next]) return;
     language = next;
     try { localStorage.setItem('aiditi-language',language); } catch {}
+    const url = new URL(location.href);
+    url.searchParams.set('lang',language);
+    history.replaceState(null,'',url.pathname + url.search + url.hash);
     document.documentElement.lang = language;
     document.title = t('title');
     document.querySelector('meta[name="description"]').content = t('description');
