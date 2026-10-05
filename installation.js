@@ -121,6 +121,9 @@
 
   }
   document.querySelector('#enter').addEventListener('click', finishEntrance);
+  document.querySelector('#intro-logo').addEventListener('click', finishEntrance);
+  function labelIntroLogo(){document.querySelector('#intro-logo').setAttribute('aria-label',({en:'AiDiTi — enter the site',it:'AiDiTi — entra nel sito',fr:'AiDiTi — entrer dans le site'}[document.documentElement.lang]||'AiDiTi — enter the site'));}
+  document.addEventListener('languagechange',labelIntroLogo);labelIntroLogo();
 
   document.querySelector('#replay').addEventListener('click', startEntrance);
   document.querySelectorAll('.brand').forEach(brand => brand.addEventListener('click', event => { event.preventDefault(); if (!entrance.hidden && entrance.classList.contains('leaving')) return; startEntrance(); }));
