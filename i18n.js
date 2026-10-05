@@ -58,7 +58,11 @@
   const requested = new URLSearchParams(location.search).get('lang');
   if (strings[requested]) language = requested;
   else { try { const saved = localStorage.getItem('aiditi-language'); if (strings[saved]) language = saved; } catch {} }
-  const t = key => strings[language][key] ?? strings.en[key] ?? key;
+  const iconPaths = {"arrow-up-right": "M5 19 19 5M5 5h14v14", "arrow-down-right": "M5 5l14 14M5 19h14V5", "arrow-up": "m6 10 6-6 6 6M12 4v16", "arrow-down": "m6 14 6 6 6-6M12 4v16", "replay": "M4 10a8 8 0 1 1 1 8M4 4v6h6", "close": "m6 6 12 12M18 6 6 18", "menu": "M4 8h16M4 16h16", "plus": "M12 5v14M5 12h14"};
+  const icon = name => `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${iconPaths[name]}"/></svg>`;
+  const symbols = {"\u2197": "arrow-up-right", "\u2198": "arrow-down-right", "\u2191": "arrow-up", "\u2193": "arrow-down", "\u21bb": "replay", "\u2715": "close", "\u2630": "menu"};
+  const polish = text => text.replace(/[↗↘↑↓↻✕☰]/g, symbol => icon(symbols[symbol])).replace("<span>+</span>","<span>"+icon("plus")+"</span>");
+  const t = key => polish(strings[language][key] ?? strings.en[key] ?? key);
   function apply(root = document) {
     root.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.dataset.i18n); });
     root.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
@@ -90,6 +94,6 @@
     document.dispatchEvent(new CustomEvent('languagechange'));
   }
   document.addEventListener('click', e => { const button = e.target.closest('[data-language]'); if (button) setLanguage(button.dataset.language); });
-  window.AiDiTiI18n = { t, apply, setLanguage, category: c => categories[language][c] || c, get language() { return language; }, description: work => work.category === 'Drawing' ? t('drawDescription') : (window.AiDiTiDescriptions?.[language]?.[work.slug] || work.description || t('defaultDescription')) };
+  window.AiDiTiI18n = { t, icon, apply, setLanguage, category: c => categories[language][c] || c, get language() { return language; }, description: work => work.category === 'Drawing' ? t('drawDescription') : (window.AiDiTiDescriptions?.[language]?.[work.slug] || work.description || t('defaultDescription')) };
   setLanguage(language);
 })();

@@ -68,12 +68,12 @@ window.createLabirintoField = (() => {
         const p=points[i],prior=points[i-1],life=Math.max(0,1-(now-p.time)/(900+p.intensity*1200));if(p.time-prior.time>170)continue;
         const power=.18+p.intensity*.8;
         for(const layer of [{width:13+p.intensity*13,alpha:.08},{width:3+p.intensity*3,alpha:.45},{width:1.2,alpha:.95}]){
-          context.lineWidth=layer.width;context.lineCap='round';context.strokeStyle=`rgba(${layer.width<2?'235,255,255':'130,222,246'},${life*power*layer.alpha})`;context.beginPath();context.moveTo(prior.x,prior.y);context.lineTo(p.x,p.y);context.stroke();
+          context.lineWidth=layer.width;context.lineCap='round';context.strokeStyle=`rgba(${layer.width<2?'255,255,255':'225,225,225'},${life*power*layer.alpha})`;context.beginPath();context.moveTo(prior.x,prior.y);context.lineTo(p.x,p.y);context.stroke();
         }
       }
       sparks=sparks.filter(p=>now-p.time<p.life);
-      sparks.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.98;p.vy*=.98;const fade=1-(now-p.time)/p.life;context.fillStyle=`rgba(193,177,255,${fade*p.intensity*.8})`;context.beginPath();context.arc(p.x,p.y,.8+p.intensity*1.5,0,Math.PI*2);context.fill();});
-      if(pointer.active){const radius=35+energy*145,g=context.createRadialGradient(pointer.x,pointer.y,0,pointer.x,pointer.y,radius);g.addColorStop(0,`rgba(188,255,236,${.1+energy*.55})`);g.addColorStop(.18,`rgba(144,220,250,${.06+energy*.22})`);g.addColorStop(1,'rgba(125,180,255,0)');context.fillStyle=g;context.fillRect(pointer.x-radius,pointer.y-radius,radius*2,radius*2);}
+      sparks.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.98;p.vy*=.98;const fade=1-(now-p.time)/p.life;context.fillStyle=`rgba(240,240,240,${fade*p.intensity*.8})`;context.beginPath();context.arc(p.x,p.y,.8+p.intensity*1.5,0,Math.PI*2);context.fill();});
+      if(pointer.active){const radius=35+energy*145,g=context.createRadialGradient(pointer.x,pointer.y,0,pointer.x,pointer.y,radius);g.addColorStop(0,`rgba(255,255,255,${.1+energy*.55})`);g.addColorStop(.18,`rgba(230,230,230,${.06+energy*.22})`);g.addColorStop(1,'rgba(230,230,230,0)');context.fillStyle=g;context.fillRect(pointer.x-radius,pointer.y-radius,radius*2,radius*2);}
       context.globalCompositeOperation='source-over';
     }
     function motion(){paused=!paused;label();if(paused){context?.clearRect(0,0,width,height);points=[];sparks=[];leave();container.style.setProperty('--logo-x','0px');container.style.setProperty('--logo-y','0px');container.style.setProperty('--logo-rx','0deg');container.style.setProperty('--logo-ry','0deg');container.style.setProperty('--logo-glow','10px');player?.pause().catch(()=>{});}else{background(container);player?.play().catch(()=>{});}}
@@ -95,7 +95,7 @@ window.createNodeMarks = container => {
     if(!context)return;const size=canvas.parentElement.clientWidth||80,dpr=Math.min(devicePixelRatio||1,2);
     if(canvas.width!==Math.round(size*dpr)){canvas.width=Math.round(size*dpr);canvas.height=Math.round(size*dpr);}context.setTransform(dpr,0,0,dpr,0,0);context.clearRect(0,0,size,size);
     const pts=shape.map(([x,y],i)=>({x:(x+pointer.x*.035+Math.sin(time*.0004+i+index)*.015)*size,y:(y+pointer.y*.035+Math.cos(time*.0005+i)*.015)*size}));
-    context.strokeStyle='rgba(109,87,183,.45)';context.lineWidth=.75;edges.forEach(([a,b])=>{context.beginPath();context.moveTo(pts[a].x,pts[a].y);context.lineTo(pts[b].x,pts[b].y);context.stroke();});context.fillStyle='#6d57b7';pts.forEach(p=>{context.beginPath();context.arc(p.x,p.y,2.1,0,Math.PI*2);context.fill();});
+    context.strokeStyle='rgba(225,225,225,.45)';context.lineWidth=.75;edges.forEach(([a,b])=>{context.beginPath();context.moveTo(pts[a].x,pts[a].y);context.lineTo(pts[b].x,pts[b].y);context.stroke();});context.fillStyle='#e1e1e1';pts.forEach(p=>{context.beginPath();context.arc(p.x,p.y,2.1,0,Math.PI*2);context.fill();});
   });}
   function move(e){if(reduced.matches)return;const r=container.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width-.5;pointer.y=(e.clientY-r.top)/r.height-.5;}
   function leave(){pointer.x=0;pointer.y=0;}

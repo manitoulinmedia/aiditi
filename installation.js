@@ -64,25 +64,25 @@
       });
       context.lineWidth = .7;
       positions.forEach((p, i) => {
-        context.fillStyle = dark ? `rgba(205,193,255,${p.opacity + .3})` : `rgba(105,85,170,${p.opacity})`;
+        context.fillStyle = dark ? `rgba(230,230,230,${p.opacity + .3})` : `rgba(210,210,210,${p.opacity})`;
         context.beginPath(); context.arc(p.x, p.y, dark ? 1.5 : 1, 0, Math.PI * 2); context.fill();
         const next = positions[(i + 8) % positions.length];
         if (Math.hypot(p.x - next.x, p.y - next.y) < size * .4) {
-          context.strokeStyle = dark ? 'rgba(195,184,245,.075)' : 'rgba(105,85,170,.07)';
+          context.strokeStyle = dark ? 'rgba(230,230,230,.075)' : 'rgba(210,210,210,.07)';
           context.beginPath(); context.moveTo(p.x, p.y); context.lineTo(next.x, next.y); context.stroke();
         }
       });
       trail.forEach((p, i) => {
         p.life -= .035;
         if (!i) return;
-        context.strokeStyle = dark ? `rgba(209,253,98,${Math.max(0,p.life) * .6})` : `rgba(105,85,170,${Math.max(0,p.life) * .4})`;
+        context.strokeStyle = dark ? `rgba(240,240,240,${Math.max(0,p.life) * .6})` : `rgba(210,210,210,${Math.max(0,p.life) * .4})`;
         context.lineWidth = dark ? 1.4 : 1;
         context.beginPath(); context.moveTo(trail[i - 1].x, trail[i - 1].y); context.lineTo(p.x, p.y); context.stroke();
       });
       trail = trail.filter(p => p.life > 0);
       if (pointer.active) {
         const gradient = context.createRadialGradient(mx, my, 0, mx, my, dark ? 150 : 110);
-        gradient.addColorStop(0, dark ? 'rgba(195,184,245,.16)' : 'rgba(195,184,245,.18)'); gradient.addColorStop(1, 'rgba(195,184,245,0)');
+        gradient.addColorStop(0, dark ? 'rgba(230,230,230,.16)' : 'rgba(230,230,230,.18)'); gradient.addColorStop(1, 'rgba(230,230,230,0)');
         context.fillStyle = gradient; context.fillRect(0, 0, width, height);
       }
     }
