@@ -109,3 +109,6 @@ footer .footer-links a:hover{text-decoration:underline;text-underline-offset:4px
 @media(max-width:900px) and (max-height:500px){.intro-logo-shadow{top:calc(36% + 8px);width:min(50vw,300px)}}
 @media(prefers-reduced-motion:reduce){.intro-logo-shadow{transform:translate(-50%,-50%)}}
 footer .brand .logo-dark{opacity:1}footer .brand .logo-light{opacity:0}
+
+/* Angela content review, 20 October 2026 */
+.client-event{grid-template-columns:110px minmax(0,1fr);cursor:default}.client-event p{max-width:760px}.client-event h3{overflow-wrap:anywhere}.portrait img{height:auto;aspect-ratio:3/4;object-fit:cover;filter:none}.about{align-items:start}@media(max-width:600px){.client-event{grid-template-columns:1fr;gap:12px}.client-event .event-year{display:block}.portrait img{height:auto}}
