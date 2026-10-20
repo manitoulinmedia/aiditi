@@ -3,6 +3,18 @@
  const observer=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>target.classList.toggle('in-view',isIntersecting)),{rootMargin:'0px 0px -4% 0px',threshold:0});
  // Only enhance after observer setup; without JS every section remains readable.
  sections.forEach(section=>{section.classList.add('view-motion');observer.observe(section);});
+ // Track the archive title itself so it can leave view while the long list remains visible.
+ const archiveTitle=document.querySelector('#events .section-title>div');
+ if(archiveTitle&&'IntersectionObserver' in window){
+  const titleObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>target.classList.toggle('title-in-view',isIntersecting)),{rootMargin:'-80px 0px -5% 0px',threshold:0.15});
+  titleObserver.observe(archiveTitle);
+  archiveTitle.classList.add('archive-title-motion');
+ }
+ const eventRows=[...document.querySelectorAll('#events .client-event')];
+ if(eventRows.length&&'IntersectionObserver' in window){
+  const rowObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>target.classList.toggle('event-in-view',isIntersecting)),{rootMargin:'-80px 0px -4% 0px',threshold:0.12});
+  eventRows.forEach(row=>{rowObserver.observe(row);row.classList.add('event-row-motion');});
+ }
  const button=document.querySelector('#share-site'),status=document.querySelector('#share-status'),dialog=document.querySelector('#share-link-dialog');
  const words={en:['Share','Link copied','Copy this link','Opening share options…','Copying link…'],it:['Condividi','Link copiato','Copia questo link','Apertura opzioni di condivisione…','Copia del link…'],fr:['Partager','Lien copié','Copiez ce lien','Ouverture du partage…','Copie du lien…']};
  const labels=()=>words[document.documentElement.lang]||words.en;
