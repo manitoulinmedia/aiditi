@@ -119,3 +119,7 @@ footer .brand .logo-dark{opacity:1}footer .brand .logo-light{opacity:0}
 
 /* Angela content review, 20 October 2026 */
 .client-event{grid-template-columns:110px minmax(0,1fr);cursor:default}.client-event p{max-width:760px}.client-event h3{overflow-wrap:anywhere}.portrait img{height:auto;aspect-ratio:3/4;object-fit:cover;filter:none}.about{align-items:start}@media(max-width:600px){.client-event{grid-template-columns:1fr;gap:12px}.client-event .event-year{display:block}.portrait img{height:auto}}
+
+/* Angela's October 21 refinements */
+.brand img{mask-image:none!important}.brand .logo-light{filter:brightness(0) invert(1)}.brand .logo-dark{filter:none}.labirinto-logo .original-logo{filter:brightness(0) invert(1);animation:none!important}.intro-logo-shadow{display:none}#hero-scene,#hero-field{display:none!important}.print-fields select{border:1px solid #22222255;background:#fff9;width:100%;padding:13px;font:inherit;font-size:14px}.contact h2 i{font-size:.68em;letter-spacing:-.045em;overflow-wrap:normal}.drawing-dimensions{margin-top:16px;font-size:13px}
+.motion-paused .labirinto-logo .animated-mark{display:block}.labirinto-logo{animation:none!important;transform:translate(-50%,-50%)!important}
