@@ -123,3 +123,8 @@ footer .brand .logo-dark{opacity:1}footer .brand .logo-light{opacity:0}
 /* Angela's October 21 refinements */
 .brand img{mask-image:none!important}.brand .logo-light{filter:brightness(0) invert(1)}.brand .logo-dark{filter:none}.labirinto-logo .original-logo{filter:brightness(0) invert(1);animation:none!important}.intro-logo-shadow{display:none}#hero-scene,#hero-field{display:none!important}.print-fields select{border:1px solid #22222255;background:#fff9;width:100%;padding:13px;font:inherit;font-size:14px}.contact h2 i{font-size:.68em;letter-spacing:-.045em;overflow-wrap:normal}.drawing-dimensions{margin-top:16px;font-size:13px}
 .motion-paused .labirinto-logo .animated-mark{display:block}.labirinto-logo{animation:none!important;transform:translate(-50%,-50%)!important}
+
+/* 2026-10-26 client refinements */
+.events .section-title h2{font-size:clamp(38px,4vw,62px)}
+.events .section-title .eyebrow{font-size:9px;letter-spacing:1.55px}
+.work-media-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:24px 0 10px}.work-media-gallery img{width:100%;height:auto;max-height:520px;object-fit:contain;background:#fff}.work-media-gallery img:first-child:nth-last-child(odd){grid-column:1/-1}@media(max-width:700px){.work-media-gallery{grid-template-columns:1fr}}
