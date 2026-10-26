@@ -1,0 +1,13 @@
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import vm from 'node:vm';
+const works=vm.runInNewContext(readFileSync('data.js','utf8')+';works');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const asset=s=>/^https:\/\//.test(s)?s:'/'+s.replace(/^\//,'');
+export function buildProjects(){
+ for(const w of works){
+  if(!/^[a-z0-9-]+$/.test(w.slug))throw new Error('Invalid artwork slug');
+  const dir=`public/work/${w.slug}`;mkdirSync(dir,{recursive:true});
+  const description=w.description||'An artwork by Angela Di Tomaso / AiDiTi.';
+  writeFileSync(`${dir}/index.html`,`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(w.title)} — AiDiTi</title><meta name="description" content="${esc(description)}"><link rel="canonical" href="https://aiditi.art/work/${w.slug}/"><meta property="og:title" content="${esc(w.title)} — AiDiTi"><meta property="og:image" content="${esc(new URL(asset(w.image),'https://aiditi.art').href)}"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/project.css"></head><body class="project-page" data-project="${w.slug}"><a class="skip-project" href="#project">Skip to artwork</a><header class="project-header"><a class="project-brand" href="/">AiDiTi</a><a class="project-back" href="/#work" data-i18n="navWork">Selected work</a><div class="languages" aria-label="Language"><button data-language="en">EN</button><button data-language="it">IT</button><button data-language="fr">FR</button></div></header><main id="project"><p class="eyebrow" id="project-category">${esc(w.category)}</p><h1>${esc(w.title)}</h1><div id="project-film"></div><div class="project-media" id="project-media"><img src="${esc(asset(w.image))}" alt="${esc(w.title)}"></div><div class="project-copy"><p id="project-description">${esc(description)}</p><p id="project-dimensions"></p><div class="project-actions"><a id="project-inquiry" class="pill" href="mailto:contact@aiditi.art" data-i18n="askWork">Ask about this work ↗</a><a id="project-print" class="text-link" href="/#prints" data-i18n="requestPrint" hidden>Request a print ↗</a></div></div><a class="project-back project-return" href="/#work" data-i18n="navWork">Selected work</a></main><footer class="project-footer"><span data-i18n="copyright">© 2026 ANGELA DI TOMASO · ALL ARTWORK RIGHTS RESERVED</span><a href="mailto:contact@aiditi.art">contact@aiditi.art</a></footer><script src="/data.js"></script><script src="/descriptions.js"></script><script src="/i18n.js?v=project-pages-20261026"></script><script src="/project.js"></script></body></html>`);
+ }
+}

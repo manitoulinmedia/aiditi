@@ -89,6 +89,7 @@
     document.title = t('title');
     document.querySelector('meta[name="description"]').content = t('description');
     apply();
+    if (document.body.dataset.project) { document.dispatchEvent(new CustomEvent('languagechange')); return; }
     document.querySelector('nav').setAttribute('aria-label', t('mainNavigation'));
     document.querySelector('.filters').setAttribute('aria-label', t('filterArtwork'));
     document.querySelector('#entrance').setAttribute('aria-label', t('introLabel'));
@@ -104,3 +105,4 @@
   window.AiDiTiI18n = { t, icon, apply, setLanguage, category: c => categories[language][c] || c, get language() { return language; }, description: work => work.category === 'Drawing' ? t('drawDescription') : (window.AiDiTiDescriptions?.[language]?.[work.slug] || work.description || t('defaultDescription')) };
   setLanguage(language);
 })();
+
