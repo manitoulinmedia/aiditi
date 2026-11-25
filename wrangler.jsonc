@@ -7,7 +7,8 @@
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "run_worker_first": true
+    // Pages and images are free static files; the Worker only sees addresses that are not real files.
+    "run_worker_first": false
   },
   "workers_dev": true,
   "main": "worker.js"
